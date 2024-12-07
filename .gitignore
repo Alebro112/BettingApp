@@ -1,0 +1,8 @@
+/vendor
+/composer.lock
+/docs
+/output
+/cache
+/tests/mvc/cache
+
+/src/Config/config.php
