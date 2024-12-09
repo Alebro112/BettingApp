@@ -65,7 +65,6 @@
         // Очистка ошибок
         errorHandler('');
 
-        // Проверка обязательных полей
         if (!username) {
             errorHandler('Введите имя пользователя');
             return;
@@ -86,14 +85,12 @@
             return;
         }
 
-        // Проверка возраста
         const age = calculateAge(birthday);
-        if (age < -1) {
+        if (age < 21) {
             errorHandler('Вам должно быть больше 21 года');
             return;
         }
 
-        // Проверка пароля
         if (!password) {
             errorHandler('Введите пароль');
             return;
@@ -104,19 +101,10 @@
             return;
         }
 
-        // Если все проверки пройдены
-        console.log({
-            username: username,
-            password: password,
-            gender: gender,
-            birthday: birthday,
-            name: name
-        });
-
         registerUser(username, password, gender, birthday, name).then(response => {
             console.log(response);
         }).catch(error => {
-            errorHandler(error.message);
+            errorHandler(error.response.message);
         });
     });
 </script>

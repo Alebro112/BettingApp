@@ -14,8 +14,8 @@ class EventDTO extends DTO {
 
     public static function create(array $values): static {
         $dto = new static();
-
         foreach ($values as $key => $value) {
+            
             if(property_exists($dto, $key)) {
                 $dto->{$key} = $value;
             }
@@ -24,7 +24,7 @@ class EventDTO extends DTO {
                 $slices = explode("//", $value);
                 $dto->outcomes[$matches[1]] = [
                     "coefficient" => $slices[0],
-                    "label" => $slices[1]
+                    "label" => isset($slices[1]) ? $slices[1] : 1.5,
                 ];
             }
         }

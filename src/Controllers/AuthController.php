@@ -22,9 +22,25 @@ class AuthController extends Controller
 
     public function login()
     {
+        $userDTO = UserDTO::create($this->requestJson());
 
+        $User = new User();
+        $userExists = $User->isExisted($userDTO);
 
-        $this->responseJson(200, "success");
+        $errors = Validator::validateRequiredFields(['username', 'password'], $userDTO->toArray());
+        if ($errors != []) {
+            ApiError::badRequest($errors[0]);
+            return;
+        }
+
+        if (!$userExists) {
+            ApiError::badRequest("Пользователь не существует");
+            return;
+        }
+
+        $response = $User->login($userDTO);
+
+        $this->responseJson(200, $response);
     }
 
 
@@ -63,8 +79,9 @@ class AuthController extends Controller
             ApiError::badRequest('Вам должно быть не менее 21 лет');
         }
 
+        $newUser = $User->create($userDTO);
 
-        $this->responseJson(200, $userExists);
+        $this->responseJson(200, $newUser);
     }
 
 }

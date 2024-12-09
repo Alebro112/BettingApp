@@ -27,7 +27,7 @@ class Api {
                     reject({
                         status: xhr.status,
                         statusText: xhr.statusText,
-                        response: xhr.responseText,
+                        response: JSON.parse(xhr.responseText),
                     });
                 }
             };

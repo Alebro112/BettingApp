@@ -11,4 +11,8 @@ class UserDTO extends DTO {
     public string $name;
     public string $gender;
     public string $birthday;
+
+    public function unsetPassword() {
+        $this->password = '';
+    }
 }

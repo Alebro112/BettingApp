@@ -28,7 +28,7 @@ class Event extends Model {
             WITH total_sum AS (
                 SELECT 
                     e.id AS eventId, 
-                    SUM(b.amount * c.rate) AS totalAmount 
+                    CASE WHEN SUM(b.amount * c.rate) IS NULL THEN 1 ELSE SUM(b.amount * c.rate) END AS totalAmount 
                 FROM 
                     events e 
                 LEFT JOIN 
@@ -40,7 +40,7 @@ class Event extends Model {
             )
 
             SELECT 
-                total_sum.eventId id,
+                e.id,
                 t1.name AS teamOneName,
                 t2.name AS teamTwoName,
                 {$columnsSql}

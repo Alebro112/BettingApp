@@ -1,44 +1,58 @@
-<?php
-// Проверка, отправлена ли форма
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $username = trim($_POST['username']);
-    $password = trim($_POST['password']);
-
-    // Подключение к базе данных
-    $pdo = new PDO('mysql:host=localhost;dbname=your_database', 'username', 'password');
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-    // Поиск пользователя в базе
-    $stmt = $pdo->prepare('SELECT id, password FROM users WHERE username = :username');
-    $stmt->execute(['username' => $username]);
-    $user = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    if ($user && password_verify($password, $user['password'])) {
-        // Успешный логин
-        $_SESSION['user_id'] = $user['id'];
-        header('Location: dashboard.php');
-        exit;
-    } else {
-        $error = 'Неверное имя пользователя или пароль.';
-    }
-}
-?>
-
 <style>
     <?php include 'index.css'; ?>
 </style>
 
 <div class="container">
-    <form class="login-form" method="POST" action="">
+    <div class="login-form">
         <h2>Вход</h2>
-        <?php if (!empty($error)): ?>
-            <div class="error"><?= htmlspecialchars($error) ?></div>
-        <?php endif; ?>
-        <input type="text" name="username" placeholder="Имя пользователя" required>
-        <input type="password" name="password" placeholder="Пароль" required>
-        <button type="submit">Войти</button>
+        <div id="error" class="error" style="color: red; margin-bottom: 10px;"></div>
+        <input id="username" type="text" name="username" placeholder="Имя пользователя">
+        <input id="password" type="password" name="password" placeholder="Пароль">
+
+        <button id="login-btn" type="button">Войти</button>
         <a href="register" class="register-link">
-            <button type="button" class="register-btn">Зарегистрироваться</button>
+            <button type="button" class="second-btn">Зарегистрироваться</button>
         </a>
-    </form>
+    </div>
 </div>
+
+<script>
+    function errorHandler(text) {
+        $("#error").text(text);
+    }
+
+    async function login(username, password) {
+        const api = new Api('http://localhost:3000');
+        const response = await api.post('/api/login', {
+            username: username,
+            password: password
+        });
+        return response;
+    }
+
+    $("#login-btn").click(function () {
+        const username = $("#username").val().trim();
+        const password = $("#password").val();
+
+        // Очистка ошибок
+        errorHandler('');
+
+        if (!username) {
+            errorHandler('Введите имя пользователя');
+            return;
+        }
+
+        if (!password) {
+            errorHandler('Введите пароль');
+            return;
+        }
+
+
+        login(username, password).then(response => {
+           console.log(response); 
+        }).catch(error => {
+            errorHandler(error.response.message);
+        });
+        
+    });
+</script>

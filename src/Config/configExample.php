@@ -9,6 +9,5 @@ define("DB_NAME", "");
 // Base URL
 define("BASEURL", "http://localhost");
 
-define("PASSWORD_DEFAULT", "");
 
 
