@@ -41,7 +41,7 @@ class Validator
         $errors = [];
         foreach ($fields as $field) {
             if (!isset($data[$field]) || trim($data[$field]) === '') {
-                $errors[] = "Поле '{$field}' обязательно для заполнения.";
+                $errors[] = "Поле {$field} обязательно для заполнения.";
             }
         }
         return $errors;

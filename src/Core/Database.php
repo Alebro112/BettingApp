@@ -39,8 +39,9 @@ class Database {
     public function execute() {
         try {
             $result = $this->mysqli->execute_query($this->sql, $this->values);
+            $id = $this->mysqli->insert_id;
             $this->clear();
-            return $result;
+            return [$result, $id];
         } catch (\Throwable $th) {
             $this->clear();
             die($th->getMessage());
@@ -48,11 +49,15 @@ class Database {
     }
 
     public function fetchAll() {
-        return $this->execute()->fetch_all(MYSQLI_ASSOC);
+        return $this->execute()[0]->fetch_all(MYSQLI_ASSOC);
     }
 
     public function fetchOne() {
-        return $this->execute()->fetch_assoc();
+        return $this->execute()[0]->fetch_assoc();
+    }
+
+    public function insert(): int {
+        return $this->execute()[1];
     }
 
     public function beginTransaction() {

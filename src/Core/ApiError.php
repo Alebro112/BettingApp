@@ -4,46 +4,34 @@ namespace App\Core;
 
 class ApiError
 {
-    private int $statusCode;
-    private string $message;
-    private array $details;
+    private $code;
+    private $message;
+    private $redirectUrl;
 
-    public function __construct(int $statusCode, string $message, array $details = [])
-    {
-        $this->statusCode = $statusCode;
+    public function __construct($code, $message, $redirectUrl = null) {
+        $this->code = $code;
         $this->message = $message;
-        $this->details = $details;
+        $this->redirectUrl = $redirectUrl;
     }
 
-    public function toJson(): string
-    {
-        http_response_code($this->statusCode);
-        return json_encode([
-            'message' => $this->message,
-            'details' => $this->details
-        ], JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
-    }
+    private function sendResponse(): never {
+        http_response_code($this->code);
+        $_SESSION['error'] = $this->message;
 
-    public function send(): void
-    {
-        header('Content-Type: application/json; charset=utf-8');
-        echo $this->toJson();
+        if ($this->redirectUrl) {
+            header('Request-Method: GET');
+            header('Location: ' . $this->redirectUrl);
+        }
         exit;
     }
 
-    public static function forbidden(array $details = []): void
-    {
-        (new self(403, 'Forbidden', $details))->send();
+    public static function handle($code, $message, $redirectUrl = null): void {
+        $error = new self($code, $message, $redirectUrl);
+        $error->sendResponse();
     }
 
-    public static function unauthorized(array $details = []): void
-    {
-        (new self(401, 'Unauthorized', $details))->send();
-    }
-
-    public static function badRequest(string $message = 'Bad Request', array $details = []): void
-    {
-        (new self(400, $message, $details))->send();
+    public static function badRequest($message = 'Bad Request', $redirectUrl = null): void {
+        (new self(400, $message, $redirectUrl))->sendResponse();
     }
 
 }

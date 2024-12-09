@@ -2,7 +2,7 @@
 
 namespace App\Core;
 
-class Dto {
+class DTO {
     public static function create(array $values): static {
         $dto = new static();
 

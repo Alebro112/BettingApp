@@ -16,15 +16,29 @@ class User extends Model
     {
         $hashedPassword = $this->hashPassword($user->password);
 
-        return $hashedPassword;
+        $this->DB()->query('INSERT INTO users(username, password, name, gender, birthday) VALUES (?, ?, ?, ?, ?)', [
+            $user->username,
+            $hashedPassword,
+            $user->name,
+            $user->gender,
+            $user->birthday
+        ]);
+
+        $id = $this->DB()->insert();
+
+        $userDB = UserDTO::create($this->getById($id));
+        $userDB->unsetPassword();
+        return $userDB;
     }
 
-    public function getByUsername($username): UserDTO {
+    public function getByUsername($username): UserDTO
+    {
         $this->DB()->query('select * from users where username = ?', [$username]);
         return UserDTO::create($this->DB()->fetchOne());
     }
 
-    public function login(UserDTO $user):mixed {
+    public function login(UserDTO $user): mixed
+    {
         $userDB = $this->getByUsername($user->username);
 
         if ($this->validatePassword($user->password, $userDB->password)) {

@@ -4,6 +4,10 @@ namespace App\Core;
 
 abstract class Controller {
 
+    protected function isAuthenticated() {
+        return isset($_SESSION['userId']);
+    }
+
     protected function render(string $view, array $data = []) {
         extract($data);
 
@@ -27,5 +31,15 @@ abstract class Controller {
         header('Content-Type: application/json; charset=utf-8');
         http_response_code($code);
         echo json_encode($data);
+    }
+
+    protected function redirect(string $url, string $method = 'GET') {
+        header("Request Method: $method");
+        header("Location: $url");
+        exit;
+    }
+
+    protected function clearMessages() {
+        $_SESSION['error'] = null;
     }
 }

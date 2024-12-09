@@ -4,27 +4,45 @@ namespace App\Controllers;
 
 use App\Core\Controller;
 
-use App\Models\Currency;
+use App\Models\Balance;
 use App\Models\Event;
-use App\Models\User;
-use App\Models\Bet;
+
 
 class HomeController extends Controller {
     public function index() {
-        $Currency = new Currency();
-        $currencies = $Currency->getAll();
 
-        $User = new User();
-        $user = $User->getById(1);
+        $balances = [];
+
+        if ($this->isAuthenticated()) {
+            $userId = $_SESSION['userId'];
+
+            $Balance = new Balance();
+            $balances = $Balance->getUserBalances($userId);
+
+        }
 
         $Event = new Event();
         $events = $Event->getAll();
 
-
         $this->renderLayout('mainLayout', 'home/index', [
-            'currencies' => $currencies, 
-            'user' => $user,
-            'events' => $events
+            'events' => $events,
+            'balances' => $balances
+        ]);
+    }
+
+    public function bet() {
+        $balances = [];
+
+        if ($this->isAuthenticated()) {
+            $userId = $_SESSION['userId'];
+
+            $Balance = new Balance();
+            $balances = $Balance->getUserBalances($userId);
+
+        }
+
+        $this->renderLayout('mainLayout', 'home/bet', [
+            'balances' => $balances
         ]);
     }
 
@@ -33,10 +51,12 @@ class HomeController extends Controller {
     }
 
     public function login() {
+        if ($this->isAuthenticated()) $this->redirect('/');
         $this->renderLayout('mainLayout', 'auth/login');
     }
 
     public function register() { 
+        if ($this->isAuthenticated()) $this->redirect('/');
         $this->renderLayout('mainLayout', 'auth/register');
     }
 }

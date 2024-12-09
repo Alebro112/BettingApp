@@ -24,6 +24,7 @@ class EventDTO extends DTO {
                 $slices = explode("//", $value);
                 $dto->outcomes[$matches[1]] = [
                     "coefficient" => $slices[0],
+                    "name" => $matches[1],
                     "label" => isset($slices[1]) ? $slices[1] : 1.5,
                 ];
             }
