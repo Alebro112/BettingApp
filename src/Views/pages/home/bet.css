@@ -1,0 +1,176 @@
+.events-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 45px);
+}
+
+.bet {
+  width: 100%;
+  max-height: 150px;
+  max-width: calc(var(--container-width) / 3 - (16px * 2) - (8px * 2));
+
+  margin-top: 12px;
+  padding: 16px 16px 16px;
+
+  display: flex;
+  flex-direction: column;
+
+  text-align: center;
+
+  background-color: #fff;
+  border-radius: 8px;
+}
+
+.bet-up {
+  width: 100%;
+
+  display: flex;
+}
+
+.bet-input {
+  width: 100%;
+}
+
+.bet-btn {
+  margin-top: 10px;
+  padding: 4px 0px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+
+  text-decoration: none;
+  color: black;
+
+  background-color: #d0d0d0;
+
+  transition: all 0.2s ease-in-out;
+}
+
+.bet-btn:hover {
+  background-color: #e8e8e8;
+}
+
+.event {
+  width: 100%;
+  max-height: 150px;
+  max-width: calc(var(--container-width) / 3 - (16px * 2) - (8px * 2));
+
+  margin-top: 12px;
+  padding: 16px 16px 16px;
+
+  text-align: center;
+
+  background-color: #fff;
+  border-radius: 8px;
+}
+
+.event:first-child {
+  margin-top: 0;
+}
+
+.event h3 {
+  margin: 0px 0px 8px;
+}
+
+.event-bet-wrapper {
+  width: 100%;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.event-bet {
+  height: 100%;
+  max-height: 70px;
+  width: 80px;
+  max-width: 80px;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.event-bet-name {
+  height: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  text-decoration: none;
+}
+
+.event-bet-btn {
+  min-height: 25px;
+  height: 100%;
+  padding: 4px 0px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+
+  text-decoration: none;
+  color: black;
+
+  background-color: #d0d0d0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  transition: all 0.2s ease-in-out;
+}
+
+.event-bet-btn[class~="active"] {
+  background-color: #e8e8e8;
+  border: 2px solid #7bbbff;
+}
+
+.event-bet-btn:hover {
+  background-color: #e8e8e8;
+}
+
+.error {
+  color: red;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.message {
+  color: green;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+
+@media screen and (max-width: 1220px) {
+  .event, .bet {
+    max-width: calc(var(--container-width-md) / 3 - (16px * 2) - (8px * 2));
+  }
+}
+
+@media screen and (max-width: 1020px) {
+  .event, .bet {
+    max-width: calc(var(--container-width-sm) / 2 - (16px * 2) - (8px * 2));
+  }
+}
+
+@media screen and (max-width: 820px) {
+  .event, .bet {
+    max-width: calc(var(--container-width-xs) - (16px * 2));
+  }
+}
+
+@media screen and (max-width: 540px) {
+  .event, .bet {
+    max-width: calc(var(--container-width-xs) - (8px * 2));
+    padding: 0px 0px 8px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .event, .bet {
+    padding: 0px 0px 8px;
+  }
+}

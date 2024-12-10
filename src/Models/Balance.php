@@ -10,13 +10,27 @@ class Balance extends Model {
         parent::__construct('balances');
     }
 
+    public function getUserBalance(int $userId, string $currency) {
+        $this->DB()->query("SELECT b.* FROM balances b WHERE b.userId = ? AND b.currency = ?", [$userId, $currency]);
+        return BalanceDTO::create($this->DB()->fetchOne());
+    }
+
     public function getUserBalances(int $userId) { 
         $this->DB()->query("SELECT b.*, c.tag FROM balances b LEFT JOIN currencies c ON c.code = b.currency WHERE b.userId = ?", [$userId]);
         return BalanceDTO::createArray($this->DB()->fetchAll());
     }
 
-    public function create(BalanceDTO $balanceDTO) {
-        $this->DB()->query("INSERT INTO balances (userId, currency) VALUES (?, ?)", [$balanceDTO->userId, $balanceDTO->currency]);
+    public function create(BalanceDTO $balance) {
+        $this->DB()->query("INSERT INTO balances (userId, currency) VALUES (?, ?)", [$balance->userId, $balance->currency]);
         return $this->DB()->insert();
+    }
+
+    public function withdraw(BalanceDTO $balance, float $amount): bool {
+        $this->DB()->query("UPDATE balances b SET amount = amount - ? WHERE b.userId = ? AND b.currency = ?", [
+            $amount,
+            $balance->userId,
+            $balance->currency
+        ]);
+        return $this->DB()->execute()[0];
     }
 }

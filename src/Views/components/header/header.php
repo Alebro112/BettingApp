@@ -4,7 +4,7 @@ $url = $_SERVER['REQUEST_URI'];
 
 $navItems = [
 	'/' => 'Главная',
-	'/admin' => 'Админ панель'
+	'/admin/users' => 'Админ панель'
 ];
 
 function getBalanceByCurrency($currencyCode, $balances)
@@ -68,6 +68,14 @@ function getBalanceByCurrency($currencyCode, $balances)
 <script>
 	$(document).ready(function () {
 		let currentCurrency = '';
+		$(document).ready(function () {
+			$('.balance').each(function () {
+				if ($(this).css('display') === 'block') {
+					currentCurrency = $(this)[0].id.split('-')[1];
+				}
+			});
+		});
+		
 
 		$('#currency-toggle').click(function () {
 			if ($('#currency-options').is(':visible')) {

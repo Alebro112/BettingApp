@@ -3,7 +3,11 @@
 namespace App\Core;
 
 class DTO {
-    public static function create(array $values): static {
+    public static function create(array|null $values): static|null {
+        if ($values === null) {
+            return null;
+        }
+
         $dto = new static();
 
         foreach ($values as $key => $value) {

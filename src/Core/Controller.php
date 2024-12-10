@@ -33,7 +33,10 @@ abstract class Controller {
         echo json_encode($data);
     }
 
-    protected function redirect(string $url, string $method = 'GET') {
+    protected function redirect(string $url, string $method = 'GET', string $message = null) {
+        if ($message != null) {
+            $_SESSION["message"] = $message;
+        }
         header("Request Method: $method");
         header("Location: $url");
         exit;

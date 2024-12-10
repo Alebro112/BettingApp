@@ -1,3 +1,7 @@
+<head>
+    <title>Borbo | Главная страница</title>
+</head>
+
 <style>
     <?php include 'index.css' ?>
 </style>
@@ -19,13 +23,13 @@
                                     <span><?= $outcome['label'] ?></span>
                                 </div>
                                 <a
-                                    href="/bet?eventId=<?= $event->id ?>&outcomeId=<?= $outcome['name'] ?>"><?= $outcome['coefficient'] ?></a>
+                                    class="event-bet-btn"
+                                    href="/bet?eventId=<?= $event->id ?>&outcome=<?= $outcome['name'] ?>"><?= $outcome['rate'] ?></a>
                             </div>
                         <?php endforeach; ?>
                     </div>
                 </div>
             <?php endforeach; ?>
-
         </div>
     </section>
 </div>

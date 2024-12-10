@@ -45,7 +45,7 @@
   text-decoration: none;
 }
 
-.event-bet a {
+.event-bet-btn {
 	height: 100%;
 	padding: 4px 0px;
 	border: none;
@@ -63,7 +63,7 @@
 	transition: all 0.2s ease-in-out;
 }
 
-.event-bet a:hover {
+.event-bet-btn:hover {
 	background-color: #e8e8e8;
 }
 

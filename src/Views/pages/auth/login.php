@@ -7,7 +7,7 @@
 </style>
 
 <div class="container">
-    <form method="post" class="login-form" action="/api/login">
+    <form method="post" class="login-form" action="/login">
         <h2>Вход</h2>
         <div id="error" class="error" style="color: red; margin-bottom: 10px;"><?php  if(isset($_SESSION['error']) && !empty($_SESSION['error'])) echo $_SESSION['error']; unset($_SESSION['error']) ?></div>
         <input id="username" type="text" name="username" placeholder="Имя пользователя">

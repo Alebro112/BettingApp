@@ -31,6 +31,10 @@ class Validator
         return $length >= $min && $length <= $max;
     }
 
+    public static function validateIsFloat(string $string): bool {
+        return filter_var($string, FILTER_VALIDATE_FLOAT);
+    }
+
     public static function validateNumber(int $number, int $min, int $max): bool
     {
         return $number >= $min && $number <= $max;

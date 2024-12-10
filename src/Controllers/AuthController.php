@@ -70,14 +70,17 @@ class AuthController extends Controller
 
         if (Validator::validateIsStringInArray(['Male', 'Female'], $userDTO->gender) == false) {
             ApiError::badRequest('Выберите пол между Male и Female', "/register");
+            return;
         }
 
         if (Validator::validateDate($userDTO->birthday) == false) {
             ApiError::badRequest('Дата рождения должна быть в формате YYYY-MM-DD', "/register");
+            return;
         }
 
         if (Validator::validateAge($userDTO->birthday, 21) == false) {
             ApiError::badRequest('Вам должно быть не менее 21 лет', "/register");
+            return;
         }
 
         $newUser = $User->create($userDTO);

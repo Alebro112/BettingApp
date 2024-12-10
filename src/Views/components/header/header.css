@@ -21,7 +21,7 @@
   display: flex;
   flex-direction: row;
 
-  transform: translateX(-12px);
+  /*transform: translateX(-12px);*/
 }
 
 .nav-item {
@@ -55,7 +55,7 @@
   display: flex;
   align-items: center;
 
-  transform: translateX(12px);
+  /*transform: translateX(12px);*/
 }
 
 .balance-container {

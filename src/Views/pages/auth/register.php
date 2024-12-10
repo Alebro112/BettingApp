@@ -1,9 +1,13 @@
+<head>
+    <title>Borbo | Регистрация</title>
+</head>
+
 <style>
     <?php include 'index.css'; ?>
 </style>
 
 <div class="container">
-    <form class="login-form" method="post" action="/api/register">
+    <form class="login-form" method="post" action="/register">
         <h2>Регистрация</h2>
         <div id="error" class="error" style="color: red; margin-bottom: 10px;"><?php  if(isset($_SESSION['error']) && !empty($_SESSION['error'])) echo $_SESSION['error']; unset($_SESSION['error']) ?></div>
         <input id="username" type="text" name="username" placeholder="Имя пользователя">

@@ -22,7 +22,7 @@ class HomeController extends Controller {
         }
 
         $Event = new Event();
-        $events = $Event->getAll();
+        $events = $Event->getEventsWithRates();
 
         $this->renderLayout('mainLayout', 'home/index', [
             'events' => $events,
@@ -38,18 +38,26 @@ class HomeController extends Controller {
 
             $Balance = new Balance();
             $balances = $Balance->getUserBalances($userId);
+        } else {
+            $this->redirect('/login');
+        }
 
+        $eventId = $_GET['eventId'];
+        $outcome = $_GET['outcome'];
+
+        $Event = new Event();
+        $event = $Event->getOneEventWithRates($eventId);
+
+        if (!$event) {
+            $this->redirect('/');
         }
 
         $this->renderLayout('mainLayout', 'home/bet', [
-            'balances' => $balances
+            'balances' => $balances,
+            'event' => $event,
+            'chosedOutcome' => $outcome
         ]);
     }
-
-    public function admin() {
-        $this->renderLayout('mainLayout', 'admin/index');
-    }
-
     public function login() {
         if ($this->isAuthenticated()) $this->redirect('/');
         $this->renderLayout('mainLayout', 'auth/login');
