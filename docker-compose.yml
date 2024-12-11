@@ -11,14 +11,12 @@ services:
       - internal
     volumes:
       - ./public/:/var/www/html/
-      - ./logs/nginx:/var/log/nginx/
   php:
     image: php:8.2-fpm
     networks:
       - internal
     volumes:
       - ./public/:/var/www/html/
-            - ./logs/php.log:/var/log/fpm-php.www.log
 networks:
   internal:
     driver: bridge
