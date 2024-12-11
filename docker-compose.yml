@@ -8,6 +8,7 @@ services:
     volumes:
       - ./public/:/var/www/html
   php:
+    image: php:8.2-fpm
     build: ./public/
     expose:
       - "9000"
