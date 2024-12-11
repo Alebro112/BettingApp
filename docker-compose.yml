@@ -1,24 +1,23 @@
-version: '3'
+version: "3"
 services:
-  php:
-    image: php:8.2-fpm
-    volumes:
-      - './public:/var/www/html'
-  
   nginx:
-    image: nginx:1.27.3
+    build:
+      context: .
+      dockerfile: nginx/Dockerfile
     ports:
-      - 80:80
+      - "8080:80"
+    networks:
+      - internal
     volumes:
-      - './public:/var/www/html'
-      - './docker/nginx/conf.d/:/etc/nginx/conf.d'
-
-  mysql:
-    image: mysql:8.0
-    environment:
-      MYSQL_DATABASE: "betting"
-      MYSQL_USER: "root"
-      MYSQL_PASSWORD: "root"
-      MYSQL_ROOT_PASSWORD: "root"
-    ports:
-      - 3306:3306
+      - ./public/:/var/www/html/
+      - ./logs/nginx:/var/log/nginx/
+  php:
+    image: php:fpm-alpine
+    networks:
+      - internal
+    volumes:
+      - ./public/:/var/www/html/
+            - ./logs/php.log:/var/log/fpm-php.www.log
+networks:
+  internal:
+    driver: bridge
