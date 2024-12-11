@@ -24,7 +24,7 @@
                                 </div>
                                 <a
                                     class="event-bet-btn"
-                                    href="/bet?eventId=<?= $event->id ?>&outcome=<?= $outcome['name'] ?>"><?= $outcome['rate'] ?></a>
+                                    href="/bet?eventId=<?= $event->id ?>&outcome=<?= $outcome['name'] ?>"><?= $outcome['rate'] ?>x</a>
                             </div>
                         <?php endforeach; ?>
                     </div>

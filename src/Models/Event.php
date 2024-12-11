@@ -35,7 +35,7 @@ class Event extends Model
                 FROM 
                     events e 
                 LEFT JOIN 
-                    bets b ON b.eventId = e.id 
+                    bets b ON b.eventId = e.id AND b.status = 'Pending'
                 LEFT JOIN 
                     currencies c ON c.code = b.currency 
                 GROUP BY 
@@ -86,7 +86,7 @@ class Event extends Model
                 FROM 
                     events e 
                 LEFT JOIN 
-                    bets b ON b.eventId = e.id 
+                    bets b ON b.eventId = e.id AND b.status = 'Pending'
                 LEFT JOIN 
                     currencies c ON c.code = b.currency 
                 GROUP BY 

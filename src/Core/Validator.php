@@ -40,6 +40,11 @@ class Validator
         return $number >= $min && $number <= $max;
     }
 
+    public static function validateIsBool(bool $bool): bool
+    {
+        return filter_var($bool, FILTER_VALIDATE_BOOLEAN);
+    }
+
     public static function validateRequiredFields(array $fields, array $data): array
     {
         $errors = [];

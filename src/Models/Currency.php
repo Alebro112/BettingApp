@@ -9,5 +9,8 @@ class Currency extends Model {
         parent::__construct('currencies');
     }
 
-    
+    public function getCurrencys() { 
+        $this->DB()->query("SELECT DISTINCT c.code FROM currencies c");
+        return $this->DB()->fetchAll();
+    }
 }

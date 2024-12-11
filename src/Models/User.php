@@ -12,6 +12,26 @@ class User extends Model
         parent::__construct('users');
     }
 
+    public function getAll()
+    {
+        $this->DB()->query("SELECT id, username, name, gender, birthday, status FROM users");
+        return UserDTO::createArray($this->DB()->fetchAll());
+    }
+
+    public function getById($id)
+    {
+        $this->DB()->query("SELECT * FROM users WHERE id = ?", [$id]);
+        $user = UserDTO::create($this->DB()->fetchOne());
+        $user->unsetPassword();
+        return $user;
+    }
+
+    public function getByUsername($username): UserDTO
+    {
+        $this->DB()->query('select * from users where username = ?', [$username]);
+        return UserDTO::create($this->DB()->fetchOne());
+    }
+
     public function create(UserDTO $user)
     {
         $hashedPassword = $this->hashPassword($user->password);
@@ -26,15 +46,32 @@ class User extends Model
 
         $id = $this->DB()->insert();
 
-        $userDB = UserDTO::create($this->getById($id));
+        $userDB = $this->getById($id);
         $userDB->unsetPassword();
         return $userDB;
     }
 
-    public function getByUsername($username): UserDTO
+    public function update(UserDTO $user)
     {
-        $this->DB()->query('select * from users where username = ?', [$username]);
-        return UserDTO::create($this->DB()->fetchOne());
+        $this->DB()->query("
+        UPDATE 
+            users 
+        SET 
+            name=?,
+            gender=?,
+            birthday=?,
+            status=?
+        WHERE 
+            id=?
+        ", [
+            $user->name,
+            $user->gender,
+            $user->birthday,
+            $user->status,
+            $user->id
+        ]);
+        $result = $this->DB()->execute()[0];
+        return $result;
     }
 
     public function login(UserDTO $user): mixed

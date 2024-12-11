@@ -25,5 +25,18 @@ $router->post('/register', AuthController::class,'register');
 $router->get('/logout', AuthController::class,'logout');
 
 $router->get('/admin/users', AdminController::class, 'usersPanel');
+$router->get('/admin/user/show', AdminController::class, 'userShow');
+$router->get('/admin/user/edit', AdminController::class, 'userInfo');
+$router->post('/admin/user/edit', AdminController::class, 'userInfoUpdate');
+$router->post('/admin/user/balance', AdminController::class, 'userBalanceUpdate');
+
+$router->get('/admin/events', AdminController::class, 'eventsPanel');
+$router->get('/admin/event/show', AdminController::class, 'eventShow');
+
+$router->post("/admin/bet/success", EventController::class,"successBet");
+$router->post("/admin/bet/failure", EventController::class,"failureBet");
+$router->post("/admin/bet/refund", EventController::class,"refundBet");
+
+$router->post("/admin/event/calculate", EventController::class,"calculateEvent");
 
 $router->dispatch();

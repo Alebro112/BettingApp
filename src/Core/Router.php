@@ -20,6 +20,10 @@ class Router {
         $this->addRoute($route, $controller, $action, 'POST');
     }
 
+    public function patch($route, $controller, $action) {
+        $this->addRoute($route, $controller, $action, 'PATCH');
+    }
+
     public function dispatch() {
         $uri = strtok($_SERVER['REQUEST_URI'], '?');
         $method = $_SERVER['REQUEST_METHOD'];

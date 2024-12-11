@@ -6,6 +6,7 @@ abstract class Model {
 
     static $db = null;
     protected $table;
+    protected $dto;
 
     public function __construct(string $table) {
         if (static::$db === null) {
@@ -15,22 +16,6 @@ abstract class Model {
 
         $this->table = $table;
     }
-
-    public function getAll() {
-        $this->DB()->query("select * from $this->table");
-        return $this->DB()->fetchAll();
-    }
-
-    public function getById(int $id) {   
-        $this->DB()->query("select * from $this->table where id = ?", [$id]);     
-        return $this->DB()->fetchOne();
-    }
-
-    public function deleteById(int $id) {
-        $this->DB()->query("delete from $this->table where id = ?", [$id]);
-        return $this->DB()->execute();
-    }
-
     protected function DB() {
         return static::$db;
     }

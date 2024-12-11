@@ -8,7 +8,10 @@ class BetDTO extends DTO
 {
     public int $id;
     public int $userId;
+    public string $username; 
     public int $eventId;
+    public string $teamOneName;
+    public string $teamTwoName;
     public string $outcome;
     public string $currency = 'EUR';
     public float $amount = 0;
