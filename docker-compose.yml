@@ -1,6 +1,7 @@
 version: "3"
 services:
   nginx:
+    image: nginx:1.27.3
     build:
       context: .
       dockerfile: nginx/Dockerfile
@@ -12,7 +13,7 @@ services:
       - ./public/:/var/www/html/
       - ./logs/nginx:/var/log/nginx/
   php:
-    image: php:fpm-alpine
+    image: php:8.2-fpm
     networks:
       - internal
     volumes:
