@@ -7,6 +7,8 @@ services:
       - 80:80
     volumes:
       - ./public/:/var/www/html
+      - ./src/:/var/www/src
+      - ./vendor/:/var/www/vendor
       - ./nginx/conf.d/:/etc/nginx/conf.d/
   php:
     image: php:8.2-fpm
