@@ -7,10 +7,11 @@ services:
       - 80:80
     volumes:
       - ./public/:/var/www/html
+      - ./nginx/conf.d/:/etc/nginx/conf.d/
   php:
     image: php:8.2-fpm
     build: ./public/
     expose:
-      - "9000"
+      - 9000
     volumes:
       - ./public/:/var/www/html
