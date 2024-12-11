@@ -15,3 +15,7 @@ services:
       - 9000
     volumes:
       - ./public/:/var/www/html
+      - ./src/:/var/www/src
+      - ./src/:/var/www/html/src
+      - ./vendor/:/var/www/vendor
+      - ./vendor/:/var/www/html/vendor
