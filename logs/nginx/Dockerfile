@@ -1,7 +1,8 @@
 FROM php:8.2-fpm
-#RUN docker-php-ext-install mysqli
-#RUN docker-php-ext-enable mysqli
-RUN composer install --no-autoloader
+COPY . .
+RUN composer install
+RUN composer dump-autoload
+
 
 # FROM ubuntu
 
