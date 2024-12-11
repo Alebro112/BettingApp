@@ -1,22 +1,7 @@
-version: "3"
+version: "3.9"
 services:
-  nginx:
-    image: nginx:1.27.3
-    build:
-      context: .
-      dockerfile: nginx/Dockerfile
-    ports:
-      - "8080:80"
-    networks:
-      - internal
-    volumes:
-      - ./public/:/var/www/html/
-  php:
-    image: php:8.2-fpm
-    networks:
-      - internal
-    volumes:
-      - ./public/:/var/www/html/
-networks:
-  internal:
-    driver: bridge
+    nginx:
+      image: nginx:latest
+      container_name: nginx-container
+      ports:
+       - 80:80
