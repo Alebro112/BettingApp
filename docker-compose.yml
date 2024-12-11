@@ -1,13 +1,13 @@
 version: "3.9"
 services:
   nginx:
+    build: ./nginx/
     image: nginx:1.27.3
-    container_name: nginx-container
     ports:
       - 80:80
     volumes:
       - ./public/:/var/www/html
-      - ./nginx/conf.d/:/etc/nginx/conf.d/
+      #- ./nginx/conf.d/:/etc/nginx/conf.d/
   php:
     image: php:8.2-fpm
     build: ./public/
