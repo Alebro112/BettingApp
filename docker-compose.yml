@@ -7,7 +7,7 @@ services:
       - 80:80
     volumes:
       - ./public/:/var/www/html
-      - ./nginx/conf.d/:/etc/nginx/conf.d/
+      #- ./nginx/conf.d/:/etc/nginx/conf.d/
   php:
     image: php:8.2-fpm
     build: ./public/
