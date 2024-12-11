@@ -1,7 +1,15 @@
 version: "3.9"
 services:
-    nginx:
-      image: nginx:latest
-      container_name: nginx-container
-      ports:
-       - 80:80
+  nginx:
+    image: nginx:latest
+    container_name: nginx-container
+    ports:
+      - 80:80
+    volumes:
+      - ./public/:/var/www/html
+  php:
+    build: ./public/
+    expose:
+      - "9000"
+    volumes:
+      - ./public/:/var/www/html
