@@ -6,11 +6,12 @@ services:
       - './public:/var/www/html'
   
   nginx:
-    image: nginx:lastest
+    image: nginx:1.27.3
     ports:
       - 80:80
     volumes:
       - './public:/var/www/html'
+      - './docker/nginx/conf.d/:/etc/nginx/conf.d'
 
   mysql:
     image: mysql:8.0
