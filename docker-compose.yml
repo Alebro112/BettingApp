@@ -1,9 +1,9 @@
 version: "3.9"
 services:
   nginx:
-    #build: 
-      #context: .
-      #dockerfile: ./docker/nginx/Dockerfile
+    build: 
+      context: .
+      dockerfile: ./docker/nginx/Dockerfile
     image: nginx:1.27.3
     container_name: nginx-container
     ports:
@@ -15,9 +15,9 @@ services:
   php:
     image: php:8.2-fpm
     container_name: php-container
-    #build: 
-      #context: .
-      #dockerfile: ./docker/php/Dockerfile
+    build: 
+      context: .
+      dockerfile: ./docker/php/Dockerfile
     expose:
       - 9000
     volumes:
