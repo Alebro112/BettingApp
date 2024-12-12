@@ -14,6 +14,6 @@ services:
     expose:
       - 9000
     volumes:
-      - ./:/var/www/html
+      - ./public/:/var/www/html
       - ./src/:/var/www/src
       - ./vendor/:/var/www/vendor
