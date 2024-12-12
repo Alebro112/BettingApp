@@ -37,9 +37,9 @@ abstract class Controller {
         if ($message != null) {
             $_SESSION["message"] = $message;
         }
-        header("Request Method: $method");
-        header("Location: $url", true,303);
-        exit;
+        #header("Request Method: $method");
+        header("Location: $url", true,302);
+        exit();
     }
 
     protected function clearMessages() {

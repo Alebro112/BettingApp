@@ -15,14 +15,14 @@ class ApiError
     }
 
     private function sendResponse(): never {
-        http_response_code($this->code);
+        #http_response_code($this->code);
         $_SESSION['error'] = $this->message;
 
         if ($this->redirectUrl) {
-            header('Request-Method: GET');
-            header('Location: ' . $this->redirectUrl);
+            #header('Request-Method: GET');
+            header('Location: ' . $this->redirectUrl, true, $this->code);
         }
-        exit;
+        exit();
     }
 
     public static function handle($code, $message, $redirectUrl = null): void {
