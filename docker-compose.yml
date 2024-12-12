@@ -15,7 +15,9 @@ services:
       #- ./src/:/var/www/src
       #- ./vendor/:/var/www/vendor
   nginx:
-    build: ./nginx
+    build: 
+      context: .
+      dockerfile: ./docker/nginx/Dockerfile
     image: nginx:1.27.3
     container_name: nginx-container
     ports:
