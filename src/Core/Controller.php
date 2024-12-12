@@ -34,11 +34,15 @@ abstract class Controller {
     }
 
     protected function redirect(string $url, string $method = 'GET', string $message = null) {
+        #http_response_code($this->code);
         if ($message != null) {
             $_SESSION["message"] = $message;
         }
-        #header("Request Method: $method");
-        header("Location: $url", true,302);
+
+        if ($url) {
+            #header('Request-Method: GET');
+            header('Location: ' . $url, true, 200);
+        }
         exit();
     }
 
