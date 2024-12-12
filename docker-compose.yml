@@ -12,8 +12,6 @@ services:
       - ./public/:/var/www/html
       - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
       - ./logs:/var/log/nginx
-    networks:
-      - app_network
   php:
     image: php:8.2-fpm
     container_name: php-container
@@ -28,8 +26,6 @@ services:
       # - ./composer.json:/var/www/composer.json
       #- ./src/:/var/www/src
       #- ./vendor/:/var/www/vendor
-    networks:
-      - app_network
 
   mysql:
     image: mariadb:latest
@@ -42,7 +38,3 @@ services:
     volumes:
       - './docker/volume/mysql:/var/lib/mysql'
       - './dump.sql:/docker-entrypoint-initdb.d/dump.sql'
-
-  networks:
-    app_network:
-      driver: bridge
