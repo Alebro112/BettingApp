@@ -21,3 +21,12 @@ services:
       - ./composer.json:/var/www/composer.json
       #- ./src/:/var/www/src
       #- ./vendor/:/var/www/vendor
+  mariadb:
+    image: mariadb:latest
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=betting
+      - MYSQL_USER=betting
+      - MYSQL_PASSWORD=betting
