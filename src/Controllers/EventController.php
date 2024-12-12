@@ -33,13 +33,20 @@ class EventController extends Controller
 
         $redirectUrl = "/bet?eventId=" . $_GET['eventId'] . "&outcome=" . $_GET['outcome'];
 
+        $User = new User();
+        $user = $User->getById(intval($_GET['userId']));
+
+        if ($user->status == 'Banned') {
+            ApiError::badRequest($redirectUrl, "Пользователь заблокирован");
+            return;
+        }
+
         if (Validator::validateIsFloat($_POST['amount']) == false) {
             ApiError::badRequest($redirectUrl, "Сумма ставки должна быть числом");
             return;
         }
 
         $betDTO = BetDTO::create([...$_POST, ...$_GET, "userId" => $_SESSION["userId"]]);
-
 
 
         if ($betDTO->amount < 0 || $betDTO->amount > 500) {
