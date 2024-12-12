@@ -34,7 +34,7 @@ class EventController extends Controller
         $redirectUrl = "/bet?eventId=" . $_GET['eventId'] . "&outcome=" . $_GET['outcome'];
 
         $User = new User();
-        $user = $User->getById(intval($_GET['userId']));
+        $user = $User->getById($_SESSION['userId']);
 
         if ($user->status == 'Banned') {
             ApiError::badRequest($redirectUrl, "Пользователь заблокирован");
