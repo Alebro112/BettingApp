@@ -6,8 +6,7 @@ use App\Core\Controller;
 use App\DTO\BalanceDTO;
 use App\Models\Balance;
 use App\Models\User;
-use App\Dto\UserDTO;
-
+use App\DTO\UserDTO;
 use App\Core\Validator;
 use App\Core\ApiError;
 
