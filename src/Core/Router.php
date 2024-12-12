@@ -41,8 +41,8 @@ class Router {
             $controller->$action();
         } else {
             header('HTTP/1.0 404 Not Found');
-            //header('Location: 404.php');
-            //throw new \Exception('Route not found');
+            header('Location: 404.php');
+            throw new \Exception('Route not found');
         }
     }
 }
