@@ -227,7 +227,7 @@ class AdminController extends Controller
                         [
                             "userId" => $_GET["userId"],
                             "currency" => $matches[1],
-                            "amount" => trim($value)
+                            "amount" => floatval($value)
                         ]
                     );
 
