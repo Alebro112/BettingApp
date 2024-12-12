@@ -7,14 +7,14 @@ services:
       - 80:80
     volumes:
       - ./public/:/var/www/html
-      - ./nginx/conf.d/:/etc/nginx/conf.d/
+      - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
   php:
     image: php:8.2-fpm
-    build: ./
+    build: ./docker/php
     expose:
       - 9000
     volumes:
-      - ./:/var/www/
+      #- ./:/var/www/
       - ./public/:/var/www/html
-      - ./src/:/var/www/src
-      - ./vendor/:/var/www/vendor
+      #- ./src/:/var/www/src
+      #- ./vendor/:/var/www/vendor
