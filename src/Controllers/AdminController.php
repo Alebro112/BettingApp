@@ -219,6 +219,10 @@ class AdminController extends Controller
         foreach ($_POST as $key => $value) {
             if (preg_match("/balance-(\w+)/", $key, $matches)) {
                 if (isset($matches[1])) {
+                    if (Validator::validateIsFloat($value)) {
+                        ApiError::badRequest($redirectUrl, "Сумма баланса должна быть числом");
+                    }
+
                     $balances[] = BalanceDTO::create(
                         [
                             "userId" => $_GET["userId"],

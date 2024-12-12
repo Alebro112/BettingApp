@@ -81,7 +81,7 @@
                         <td><?= $balance->currency ?></td>
                         <td>
                             <div class="form-group">
-                                <input type="number" id="balanceEdit-<?= $balance->currency ?>" name="balance-<?= $balance->currency ?>"
+                                <input id="balanceEdit-<?= $balance->currency ?>" name="balance-<?= $balance->currency ?>"
                                     value="<?= $balance->amount ?>">
                             </div>
                         </td>
