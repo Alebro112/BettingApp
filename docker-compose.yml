@@ -10,7 +10,9 @@ services:
       - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
   php:
     image: php:8.2-fpm
-    build: ./docker/php
+    build: 
+      context: .
+      dockerfile: ./docker/php
     expose:
       - 9000
     volumes:

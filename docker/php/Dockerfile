@@ -11,7 +11,6 @@ RUN docker-php-ext-install zip
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 RUN composer self-update
 
-WORKDIR /var/www/
 
 COPY composer.json composer.json
 RUN composer update
