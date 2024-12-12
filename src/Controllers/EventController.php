@@ -28,14 +28,13 @@ class EventController extends Controller
     public function makeBet()
     {
         if ($this->isAuthenticated() == false) {
-            $this->redirect("/");
-            die;
+            ApiError::unauthorized("/login");
         }
 
         $redirectUrl = "/bet?eventId=" . $_GET['eventId'] . "&outcome=" . $_GET['outcome'];
 
         if (Validator::validateIsFloat($_POST['amount']) == false) {
-            ApiError::badRequest("Сумма ставки должна быть числом", $redirectUrl);
+            ApiError::badRequest($redirectUrl, "Сумма ставки должна быть числом");
             return;
         }
 
@@ -44,7 +43,7 @@ class EventController extends Controller
 
 
         if ($betDTO->amount < 0 || $betDTO->amount > 500) {
-            ApiError::badRequest("Сумма ставки не может быть больше 500 {$betDTO->currency} и не может быть меньше 0", $redirectUrl);
+            ApiError::badRequest($redirectUrl, "Сумма ставки не может быть больше 500 {$betDTO->currency} и не может быть меньше 0");
             return;
         }
 
@@ -52,7 +51,7 @@ class EventController extends Controller
         $balance = $Balance->getUserBalance($betDTO->userId, $betDTO->currency);
 
         if (empty($balance) || ($balance->amount - $betDTO->amount) < 0) {
-            ApiError::badRequest("На счету недостаточно средств", $redirectUrl);
+            ApiError::badRequest($redirectUrl, "На счету недостаточно средств");
             return;
         }
 
@@ -61,7 +60,7 @@ class EventController extends Controller
 
 
         if (isset($event->outcomes[$betDTO->outcome]) == false) {
-            ApiError::badRequest("Выбранный исход не существует", $redirectUrl);
+            ApiError::badRequest($redirectUrl, "Выбранный исход не существует");
             return;
         }
 
@@ -72,7 +71,7 @@ class EventController extends Controller
         $result = $Bet->createAndWithdraw($betDTO);
 
         if ($result == false) {
-            ApiError::badRequest('Произошла ошибка', $redirectUrl);
+            ApiError::badRequest($redirectUrl, 'Произошла ошибка');
             return;
         }
 
@@ -82,25 +81,25 @@ class EventController extends Controller
     public function successBet()
     {
         if ($this->isAuthenticated() == false) {
-            $this->redirect("/login");
+            ApiError::unauthorized("/login");
         }
 
         if (isset($_GET["betId"]) == false) {
-            $this->redirect("/admin/events");
+            ApiError::badRequest("/admin/events");
         }
 
         $Bet = new Bet();
         $bet = $Bet->getOneById($_GET["betId"]);
 
         if ($bet == null) {
-            $this->redirect("/admin/events");
+            ApiError::badRequest("/admin/events");
         }
 
         $redirectUrl = "/admin/event/show?eventId=" . $bet->eventId;
         $result = $Bet->success($bet);
 
         if ($result == false) {
-            ApiError::badRequest("Произошла ошибка", $redirectUrl);
+            ApiError::badRequest($redirectUrl,"Произошла ошибка");
         }
 
         $this->redirect($redirectUrl, "GET", "Ставка успешно завершена");
@@ -109,25 +108,25 @@ class EventController extends Controller
     public function failureBet()
     {
         if ($this->isAuthenticated() == false) {
-            $this->redirect("/login");
+            ApiError::unauthorized("/login");
         }
 
         if (isset($_GET["betId"]) == false) {
-            $this->redirect("/admin/events");
+            ApiError::badRequest("/admin/events");
         }
 
         $Bet = new Bet();
         $bet = $Bet->getOneById($_GET["betId"]);
 
         if ($bet == null) {
-            $this->redirect("/admin/events");
+            ApiError::badRequest("/admin/events");
         }
 
         $redirectUrl = "/admin/event/show?eventId=" . $bet->eventId;
         $result = $Bet->fail($bet);
 
         if ($result == false) {
-            ApiError::badRequest("Произошла ошибка", $redirectUrl);
+            ApiError::badRequest($redirectUrl, "Произошла ошибка");
         }
 
         $this->redirect($redirectUrl, "GET", "Ставка завершена поражением");
@@ -136,25 +135,25 @@ class EventController extends Controller
     public function refundBet()
     {
         if ($this->isAuthenticated() == false) {
-            $this->redirect("/login");
+            ApiError::unauthorized("/login");
         }
 
         if (isset($_GET["betId"]) == false) {
-            $this->redirect("/admin/events");
+            ApiError::badRequest("/admin/events");
         }
 
         $Bet = new Bet();
         $bet = $Bet->getOneById($_GET["betId"]);
 
         if ($bet == null) {
-            $this->redirect("/admin/events");
+            ApiError::badRequest("/admin/events");
         }
 
         $redirectUrl = "/admin/event/show?eventId=" . $bet->eventId;
         $result = $Bet->refund($bet);
 
         if ($result == false) {
-            ApiError::badRequest("Произошла ошибка", $redirectUrl);
+            ApiError::badRequest($redirectUrl, "Произошла ошибка");
         }
 
         $this->redirect($redirectUrl, "GET", "Ставка возвращена");
@@ -163,25 +162,25 @@ class EventController extends Controller
     public function calculateEvent()
     {
         if ($this->isAuthenticated() == false) {
-            $this->redirect("/login");
+            ApiError::unauthorized("/login");
         }
 
         if (isset($_GET["eventId"]) == false || $_GET["outcome"] == false) {
-            $this->redirect("/admin/events");
+            ApiError::badRequest("/admin/events");
         }
 
         $Event = new Event();
         $event = $Event->getOneEventWithRates($_GET["eventId"]);
 
         if ($event == null) {
-            $this->redirect("/admin/events");
+            ApiError::badRequest("/admin/events");
         }
 
         $Outcome = new Outcome();
         $outcome = $Outcome->getNames();
 
         if (Validator::validateIsStringInArray(array_map(fn($value): string => $value["name"], $outcome), $_GET["outcome"]) == false) {
-            $this->redirect("/admin/events");
+            ApiError::badRequest("/admin/events");
         }
 
         $Bet = new Bet();

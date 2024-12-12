@@ -18,7 +18,7 @@ class AdminController extends Controller
     public function usersPanel()
     {
         if ($this->isAuthenticated() == false) {
-            $this->redirect("/login");
+            ApiError::unauthorized("/login");
         }
 
         $User = new User();
@@ -32,7 +32,7 @@ class AdminController extends Controller
     public function eventsPanel()
     {
         if ($this->isAuthenticated() == false) {
-            $this->redirect("/login");
+            ApiError::unauthorized("/login");
         }
 
         $Event = new Event();
@@ -46,19 +46,19 @@ class AdminController extends Controller
     public function userInfo()
     {
         if ($this->isAuthenticated() == false) {
-            $this->redirect("/login");
+            ApiError::unauthorized("/login");
         }
 
         $User = new User();
 
         if (isset($_GET["userId"]) == false) {
-            $this->redirect("/admin/users");
+            ApiError::badRequest("/admin/users");
         }
 
         $user = $User->getById($_GET["userId"]);
 
         if ($user == null) {
-            $this->redirect("/admin/users");
+            ApiError::badRequest("/admin/users");
         }
 
         $Balance = new Balance();
@@ -70,21 +70,22 @@ class AdminController extends Controller
         ]);
     }
 
-    public function userShow() {
+    public function userShow()
+    {
         if ($this->isAuthenticated() == false) {
-            $this->redirect("/login");
+            ApiError::unauthorized("/login");
         }
 
         $User = new User();
 
         if (isset($_GET["userId"]) == false) {
-            $this->redirect("/admin/users");
+            ApiError::badRequest("/admin/users");
         }
 
         $user = $User->getById($_GET["userId"]);
 
         if ($user == null) {
-            $this->redirect("/admin/users");
+            ApiError::badRequest("/admin/users");
         }
 
         $Balance = new Balance();
@@ -103,24 +104,24 @@ class AdminController extends Controller
     public function eventShow()
     {
         if ($this->isAuthenticated() == false) {
-            $this->redirect("/login");
+            ApiError::unauthorized("/login");
         }
 
         if (isset($_GET["eventId"]) == false) {
-            $this->redirect("/admin/events");
+            ApiError::badRequest("/admin/events");
         }
 
         $Event = new Event();
         $event = $Event->getOneEventWithRates($_GET["eventId"]);
 
         if ($event == null) {
-            $this->redirect("/admin/events");
+            ApiError::badRequest("/admin/events");
         }
 
         $Bet = new Bet();
         $bets = $Bet->getByEventId($event->id);
 
-    
+
         /*
         echo '<pre>';
         print_r($bets);
@@ -136,45 +137,45 @@ class AdminController extends Controller
     public function userInfoUpdate()
     {
         if ($this->isAuthenticated() == false) {
-            $this->redirect("/login");
+            ApiError::unauthorized("/login");
         }
 
         $User = new User();
 
         if (isset($_GET["userId"]) == false) {
-            $this->redirect("/admin/users");
+            ApiError::badRequest("/admin/users");
         }
 
         $user = $User->getById($_GET["userId"]);
 
         if ($user == null) {
-            $this->redirect("/admin/users");
+            ApiError::badRequest("/admin/users");
         }
 
         $redirectUrl = "/admin/user/edit?userId=" . $_GET["userId"];
         $errors = Validator::validateRequiredFields(['gender', 'birthday', 'name', 'status'], $_POST);
         if ($errors != []) {
-            ApiError::badRequest($errors[0], $redirectUrl);
+            ApiError::badRequest($redirectUrl, $errors[0]);
             return;
         }
 
         if (Validator::validateIsStringInArray(['Male', 'Female'], $_POST['gender']) == false) {
-            ApiError::badRequest('Выберите пол между Male и Female', $redirectUrl);
+            ApiError::badRequest($redirectUrl, 'Выберите пол между Male и Female');
             return;
         }
 
         if (Validator::validateDate($_POST['birthday']) == false) {
-            ApiError::badRequest('Дата рождения должна быть в формате YYYY-MM-DD', $redirectUrl);
+            ApiError::badRequest($redirectUrl, 'Дата рождения должна быть в формате YYYY-MM-DD');
             return;
         }
 
         if (Validator::validateAge($_POST['birthday'], 21) == false) {
-            ApiError::badRequest('Вам должно быть не менее 21 лет', $redirectUrl);
+            ApiError::badRequest($redirectUrl, 'Вам должно быть не менее 21 лет');
             return;
         }
 
         if (Validator::validateIsStringInArray(['Active', 'Banned'], $_POST['status']) == false) {
-            ApiError::badRequest('Выберите статус между Active и Banned', $redirectUrl);
+            ApiError::badRequest($redirectUrl, 'Выберите статус между Active и Banned');
             return;
         }
 
@@ -196,19 +197,19 @@ class AdminController extends Controller
     public function userBalanceUpdate()
     {
         if ($this->isAuthenticated() == false) {
-            $this->redirect("/login");
+            ApiError::unauthorized("/login");
         }
 
         $User = new User();
 
         if (isset($_GET["userId"]) == false) {
-            $this->redirect("/admin/users");
+            ApiError::badRequest("/admin/users");
         }
 
         $user = $User->getById($_GET["userId"]);
 
         if ($user == null) {
-            $this->redirect("/admin/users");
+            ApiError::badRequest("/admin/users");
         }
 
         $redirectUrl = "/admin/user/edit?userId=" . $_GET["userId"];

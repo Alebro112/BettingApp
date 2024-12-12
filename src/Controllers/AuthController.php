@@ -21,21 +21,21 @@ class AuthController extends Controller
         $errors = Validator::validateRequiredFields(['username', 'password'], $userDTO->toArray());
 
         if ($errors != []) {
-            ApiError::badRequest($errors[0], '/login');
+            ApiError::badRequest("/login",$errors[0]);
             die;
         }
 
         $User = new User();
         $userExists = $User->isExisted($userDTO);
         if (!$userExists) {
-            ApiError::badRequest("Пользователь не найден", "/login");
+            ApiError::badRequest("/login","Пользователь не найден");
             die;
         }
         
         $response = $User->login($userDTO);
 
         if ($response == false) {
-            ApiError::badRequest("Неправильный логин или пароль", "/login");
+            ApiError::badRequest("/login","Неправильный логин или пароль");
         }
 
         $_SESSION["userId"] = $response->id;
@@ -53,32 +53,32 @@ class AuthController extends Controller
 
         $errors = Validator::validateRequiredFields(['username', 'password', 'gender', 'birthday', 'name'], $userDTO->toArray());
         if ($errors != []) {
-            ApiError::badRequest($errors[0], "/register");
+            ApiError::badRequest("/register", $errors[0]);
             return;
         }
 
         if ($userExists) {
-            ApiError::badRequest("Имя пользователя занято", "/register");
+            ApiError::badRequest("/register", "Имя пользователя занято");
             return;
         }
 
         if (Validator::validateStringLength($userDTO->password, 8, 32) == false) {
-            ApiError::badRequest("Пароль должен быть от 8 до 32 символов", "/register");
+            ApiError::badRequest("/register", "Пароль должен быть от 8 до 32 символов");
             return;
         }
 
         if (Validator::validateIsStringInArray(['Male', 'Female'], $userDTO->gender) == false) {
-            ApiError::badRequest('Выберите пол между Male и Female', "/register");
+            ApiError::badRequest("/register", 'Выберите пол между Male и Female');
             return;
         }
 
         if (Validator::validateDate($userDTO->birthday) == false) {
-            ApiError::badRequest('Дата рождения должна быть в формате YYYY-MM-DD', "/register");
+            ApiError::badRequest("/register", 'Дата рождения должна быть в формате YYYY-MM-DD');
             return;
         }
 
         if (Validator::validateAge($userDTO->birthday, 21) == false) {
-            ApiError::badRequest('Вам должно быть не менее 21 лет', "/register");
+            ApiError::badRequest("/register", 'Вам должно быть не менее 21 лет');
             return;
         }
 

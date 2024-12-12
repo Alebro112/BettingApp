@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Core\ApiError;
 use App\Core\Controller;
 
 use App\Models\Balance;
@@ -39,7 +40,7 @@ class HomeController extends Controller {
             $Balance = new Balance();
             $balances = $Balance->getUserBalances($userId);
         } else {
-            $this->redirect('/login');
+            ApiError::unauthorized("/login");   
         }
 
         $eventId = $_GET['eventId'];
@@ -49,7 +50,7 @@ class HomeController extends Controller {
         $event = $Event->getOneEventWithRates($eventId);
 
         if (!$event) {
-            $this->redirect('/');
+            ApiError::badRequest("/");
         }
 
         $this->renderLayout('mainLayout', 'home/bet', [
@@ -59,12 +60,12 @@ class HomeController extends Controller {
         ]);
     }
     public function login() {
-        if ($this->isAuthenticated()) $this->redirect('/');
+        if ($this->isAuthenticated()) ApiError::forbidden("/");
         $this->renderLayout('mainLayout', 'auth/login');
     }
 
     public function register() { 
-        if ($this->isAuthenticated()) $this->redirect('/');
+        if ($this->isAuthenticated()) ApiError::forbidden("/");
         $this->renderLayout('mainLayout', 'auth/register');
     }
 }
