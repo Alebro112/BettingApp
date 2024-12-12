@@ -1,3 +1,2 @@
 FROM nginx
-COPY ./nginx/nginx.conf /etc/nginx/conf.d/default.conf
-COPY --from=build /app/build /usr/share/nginx/html
+COPY ./conf.d/default.conf /etc/nginx/conf.d/default.conf

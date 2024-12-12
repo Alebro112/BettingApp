@@ -5,3 +5,5 @@
 /tests/mvc/cache
 
 *.log
+
+wad.yml

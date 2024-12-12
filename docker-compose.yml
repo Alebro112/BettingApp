@@ -1,39 +1,20 @@
 version: "3.9"
 services:
-  php:
-    image: php:8.2-fpm
-    container_name: php-container
-    build: 
-      context: .
-      dockerfile: ./docker/php/Dockerfile
-    expose:
-      - 9000
-    volumes:
-      #- ./:/var/www/
-      - ./public/:/var/www/html
-      # - ./composer.json:/var/www/composer.json
-      #- ./src/:/var/www/src
-      #- ./vendor/:/var/www/vendor
   nginx:
+    image: nginx:1.27.3
+    build: ./nginx/
+    ports:
+    - 80:80
+
+    volumes:
+      - ./public/:/var/www/html/
+      - ./logs:/var/log/nginx
+
+  php:
     build: 
       context: .
       dockerfile: ./docker/nginx/Dockerfile
-    image: nginx:1.27.3
-    container_name: nginx-container
-    ports:
-      - 80:80
+    expose:
+      - 9000
     volumes:
-      - ./public/:/var/www/html
-      - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
-      - ./logs:/var/log/nginx
-  mysql:
-    image: mariadb:latest
-    container_name: mysql-container
-    environment:
-      - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=betting
-      - MYSQL_USER=betting
-      - MYSQL_PASSWORD=betting
-    volumes:
-      - './docker/volume/mysql:/var/lib/mysql'
-      - './dump.sql:/docker-entrypoint-initdb.d/dump.sql'
+      - ./public/:/var/www/html/
