@@ -16,5 +16,6 @@ services:
     volumes:
       - ./:/var/www/
       - ./public/:/var/www/html
+      - ./composer.json:/var/www/composer.json
       #- ./src/:/var/www/src
       #- ./vendor/:/var/www/vendor

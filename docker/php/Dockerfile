@@ -1,10 +1,19 @@
 FROM php:8.2-fpm
 
-RUN curl -s https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin/ --filename=composer
+# INSTALL ZIP TO USE COMPOSER
+RUN apt-get update && apt-get install -y \
+    zlib1g-dev \
+    libzip-dev \
+    unzip
+RUN docker-php-ext-install zip
 
-COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+# INSTALL AND UPDATE COMPOSER
+COPY --from=composer /usr/bin/composer /usr/bin/composer
+RUN composer self-update
 
-WORKDIR /var/www
+WORKDIR /var/www/
 
+COPY composer.json composer.json
+RUN composer update
 RUN composer install
 RUN composer dump-autoload
