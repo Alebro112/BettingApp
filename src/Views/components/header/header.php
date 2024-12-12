@@ -56,7 +56,7 @@ function getBalanceByCurrency($currencyCode, $balances)
 						<?php endif; ?>
 					</div>
 				<?php endif; ?>
-				<span class="nav-item"><?php echo $_SESSION['username'] ?></span>
+				<span class="nav-item"><a href="/admin/user/show?userId=<?= $_SESSION['userId'] ?>">Профиль</a></span>
 				<span class="nav-item"><a href="/logout">Выйти</a></span>
 			<?php else: ?>
 				<span class="nav-item"><a href="/login">Войти</a></span>
