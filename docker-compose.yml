@@ -6,7 +6,7 @@ services:
     ports:
       - 80:80
     volumes:
-      - ./:/var/www/html
+      - ./public/:/var/www/html
       - ./nginx/conf.d/:/etc/nginx/conf.d/
   php:
     image: php:8.2-fpm
@@ -14,6 +14,7 @@ services:
     expose:
       - 9000
     volumes:
-      - ./:/var/www/html
+      - ./:/var/www/
+      - ./public/:/var/www/html
       - ./src/:/var/www/src
       - ./vendor/:/var/www/vendor
