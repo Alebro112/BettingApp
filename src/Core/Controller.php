@@ -38,11 +38,12 @@ abstract class Controller {
             $_SESSION["message"] = $message;
         }
         header("Request Method: $method");
-        header("Location: $url");
+        header("Location: $url", true,303);
         exit;
     }
 
     protected function clearMessages() {
-        $_SESSION['error'] = null;
+        unset($_SESSION['error']);  
+        unset($_SESSION['message'] );
     }
 }
