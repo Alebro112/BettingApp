@@ -21,7 +21,7 @@ services:
     expose:
       - 9000
     volumes:
-      #- ./:/var/www/
+      - ./:/var/www/
       - ./public/:/var/www/html
       # - ./composer.json:/var/www/composer.json
       #- ./src/:/var/www/src
