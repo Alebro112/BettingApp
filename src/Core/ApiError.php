@@ -22,8 +22,8 @@ class ApiError
 
         if ($this->redirectUrl) {
             #header('Request-Method: GET');
-            header("HTTP/1.0 {$this->code} {$this->message}");
-            header("Cahce-Control: no-cache, must-revalidate");
+            #header("HTTP/1.0 {$this->code} {$this->message}");
+            #header("Cahce-Control: no-cache, must-revalidate");
             header('Location: ' . $this->redirectUrl, true, $this->code);
         }
         exit();
