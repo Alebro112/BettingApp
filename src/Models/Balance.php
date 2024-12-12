@@ -39,17 +39,14 @@ class Balance extends Model {
 
     public function updateOrCreate(BalanceDTO $balance) {
         $userBalance = $this->getUserBalance($balance->userId, $balance->currency);
-        echo "first";
         if ($userBalance) { 
             $this->DB()->query("UPDATE balances b SET amount = ? WHERE b.userId = ? AND b.currency = ?", [$balance->amount, $balance->userId, $balance->currency]);
             return $this->DB()->execute();
         }
-        echo "second";
         if ($balance->amount != 0) { 
             $this->DB()->query("INSERT INTO balances (userId, currency, amount) VALUES (?, ?, ?)", [$balance->userId, $balance->currency, $balance->amount]);
             return $this->DB()->execute();
         }
-        echo "third";
         return false;
     }
 
