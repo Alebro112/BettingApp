@@ -59,7 +59,7 @@ class Balance extends Model {
         return $this->DB()->execute()[0];
     }
 
-    public function deposite(BalanceDTO $balance, int $amount): bool {
+    public function deposite(BalanceDTO $balance, float $amount): bool {
         $this->DB()->query("UPDATE balances b SET amount = amount + ? WHERE b.userId = ? AND b.currency = ?", [$amount, $balance->userId, $balance->currency]);
         return $this->DB()->execute()[0];
     }
