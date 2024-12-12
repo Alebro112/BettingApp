@@ -30,3 +30,4 @@ services:
       - MYSQL_PASSWORD=betting
     volumes:
       - './docker/volume/mysql:/var/lib/mysql'
+      - './dump.sql:/docker-entrypoint-initdb.d/dump.sql'
