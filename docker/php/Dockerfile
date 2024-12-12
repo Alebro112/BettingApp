@@ -1,9 +1,7 @@
 FROM php:8.2-fpm
 
 # Install and enable php extensions
-RUN docker-php-ext-install \
-    curl \
-    mysqli
+RUN docker-php-ext-install mysqli
 
 # Install composer
 
