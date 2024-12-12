@@ -4,9 +4,9 @@ RUN curl -s https://getcomposer.org/installer | php -- --install-dir=/usr/local/
 
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-WORKDIR /var/www
+WORKDIR /var/www/html
 
-COPY composer.json composer.json
+COPY ../composer.json composer.json
 COPY . .
 RUN composer install
 RUN composer dump-autoload
