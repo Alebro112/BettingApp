@@ -36,7 +36,7 @@ class Validator
     }
 
     public static function validateIsNumeric(string $string): bool {
-        return is_numeric($string) && strpos($string, '.') !== false;
+        return is_numeric($string);
     }
 
     public static function validateNumber(int $number, int $min, int $max): bool
