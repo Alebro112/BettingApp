@@ -35,6 +35,10 @@ class Validator
         return filter_var($string, FILTER_VALIDATE_FLOAT);
     }
 
+    public static function validateIsNumeric(string $string): bool {
+        return is_numeric($string) && strpos($string, '.') !== false;
+    }
+
     public static function validateNumber(int $number, int $min, int $max): bool
     {
         return $number >= $min && $number <= $max;
