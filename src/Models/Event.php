@@ -6,7 +6,7 @@ use App\Core\Model;
 
 use App\Models\Outcome;
 
-use App\Dto\EventDTO;
+use App\DTO\EventDTO;
 
 class Event extends Model
 {
