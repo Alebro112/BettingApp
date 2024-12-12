@@ -3,6 +3,7 @@ services:
   nginx:
     #build: ./nginx/
     image: nginx:1.27.3
+    container_name: nginx-container
     ports:
       - 80:80
     volumes:
@@ -10,6 +11,7 @@ services:
       - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
   php:
     image: php:8.2-fpm
+    container_name: php-container
     build: 
       context: .
       dockerfile: ./docker/php/Dockerfile
@@ -23,6 +25,7 @@ services:
       #- ./vendor/:/var/www/vendor
   mysql:
     image: mariadb:latest
+    container_name: mysql-container
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=betting
