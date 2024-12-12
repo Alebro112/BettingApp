@@ -219,11 +219,9 @@ class AdminController extends Controller
         foreach ($_POST as $key => $value) {
             if (preg_match("/balance-(\w+)/", $key, $matches)) {
                 if (isset($matches[1])) {
-                    if (Validator::validateIsNumeric(trim($value))) {
-                        echo 'pon';    
-                        //ApiError::badRequest($redirectUrl, "Сумма должна быть числом");
+                    if (Validator::validateIsNumeric(trim($value)) == false) {
+                        ApiError::badRequest($redirectUrl, "Сумма должна быть числом");
                     }
-                    echo $value;
                     $balances[] = BalanceDTO::create(
                         [
                             "userId" => $_GET["userId"],
@@ -242,7 +240,7 @@ class AdminController extends Controller
         }
 
         $_SESSION['message'] = "Пользователь успешно обновлен";
-        //$this->redirect($redirectUrl);
+        $this->redirect($redirectUrl);
     }
 
 }
