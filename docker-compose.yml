@@ -21,7 +21,7 @@ services:
       # - ./composer.json:/var/www/composer.json
       #- ./src/:/var/www/src
       #- ./vendor/:/var/www/vendor
-  mariadb:
+  mysql:
     image: mariadb:latest
     environment:
       - MYSQL_ROOT_PASSWORD=root
